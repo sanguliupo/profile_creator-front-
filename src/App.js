@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import Navigation from './Navigation';
+import CardList from './CardList';
+import CreateProfile from './CreateProfile';
 import './App.css';
 
 class App extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      profiles:[],
+    };
+    
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(users => this.setState({ profiles: users }));
+  }
+
+  render() {  
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+         <Navigation />
+         <CreateProfile />
+         <CardList profiles={this.state.profiles}/ >
       </div>
     );
   }
