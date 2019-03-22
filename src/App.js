@@ -14,20 +14,36 @@ class App extends Component {
     
   }
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
+  fetchProfiles = () => {
+    fetch('/profiles')
       .then(response => response.json())
       .then(users => this.setState({ profiles: users }));
   }
 
-  render() {  
-    return (
-      <div className="App">
-         <Navigation />
-         <CreateProfile />
-         <CardList profiles={this.state.profiles}/ >
-      </div>
-    );
+  componentDidMount() {
+    this.fetchProfiles();
+  }
+
+  render() { 
+    const {profiles} = this.state;
+    console.log('profiles', profiles)
+    if(profiles.length > 0) {
+      return (
+        <div className="App">
+          <Navigation />
+          <CreateProfile fetchProfiles={this.fetchProfiles} />
+          <CardList profiles={profiles}/ >
+        </div>
+      );
+
+    } else {
+      return (
+        <div className="App">
+         Loading...
+        </div>
+      );
+
+    }
   }
 }
 

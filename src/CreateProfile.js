@@ -1,71 +1,47 @@
 import React, { Component } from 'react';
-import ImageUploader from 'react-images-upload';
 import CardList from './CardList';
+
+const HEADER_TYPE = {
+	'Content-Type': 'application/json'
+};
 
 class CreateProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			name: '',
 			description: '',
-			pictures:[],
-			user: {
-        		name: "Default",
-        		description: "",
-        		pictures:[]
-      		}
-		};
-		this.onDrop = this.onDrop.bind(this);
+			imageUrl: '',
+		}
 	}
 
-	onNameChange = (event) => {
-		this.setState({
-			name: event.target.value
+	onSubmit = async (event) => {
+		event.preventDefault();
+		const {name, description, imageUrl} = this.state;
+		const response = await fetch('/profile', {
+			method: 'POST',
+			headers: HEADER_TYPE,
+			body: JSON.stringify({ name, description, imageUrl})
 		});
-	};
+		const responseText = await response.text();
+		const profileResponse = JSON.parse(responseText);
 
-	onDescriptionChange = (event) => {
-		this.setState({
-			description: event.target.value
+		console.log('profileResponse', profileResponse);
+
+		this.setState({ 			
+			name: '',
+			description: '',
+			imageUrl: '', 
 		});
-	};
 
-	onDrop(picture) {
-        this.setState({
-            pictures: this.state.pictures.concat(picture),
-        });
-    }
-
-    onSubmit(){
-    	fetch('http://localhost:3000/register',{
-    		method: 'post',
-    		headers:{'Content-Type': 'application/json'},
-    		body: JSON.stringify({
-    			name: this.state.name,
-    			description: this.state.description,
-    			pictures: this.state.pictures
-    		})
-    	})
-    		.then(response => response.json())
-    		.then(user=>{
-    			this.loadUser(user);
-    		})
-    }
-
-    loadUser = (data) => {
-		this.setState({user:{
-			name: data.name,
-			description: data.description,
-			pictures:data.pictures
-		}})
+		this.props.fetchProfiles();
 	}
-
-
 
 	render() {
-	
+		const {name, description, imageUrl} = this.state;
 		return (
 			<div >
-				<form className=" bg-light-pink dib br4 pa3 ma3 grow bw2 tc topBar">
+				<form className="bg-light-pink dib br4 pa3 ma3 grow bw2 tc topBar">
 					<p className="athelas f5 ma2 commentbox">
 						Create your profile
 					</p>
@@ -73,41 +49,37 @@ class CreateProfile extends Component {
 						className="athelas f5"
 						type="text"
 						placeholder="Your name"
-						onChange={this.onNameChange}
-						value={this.state.name}
+						onChange={(event)=> {
+							this.setState({name: event.target.value});
+						}}
+						value={name}
 					/>
-
 					<input
 						type="text"
 						className="commentbox"
 						placeholder="Description"
-						onChange={this.onDescriptionChange}
-						value={this.state.description}
+						onChange={(event)=> {
+							this.setState({description: event.target.value});
+						}}
+						value={description}
 					/>
-
-					<ImageUploader
-				        withIcon={true}
-				        buttonText='Choose a profile picture'
-				        onChange={this.onDrop}
-				        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-				        maxFileSize={5242880}
-        			/>
+					<input
+						type="text"
+						className="commentbox"
+						placeholder="Image Url"
+						onChange={(event)=> {
+							this.setState({imageUrl: event.target.value});
+						}}
+						value={imageUrl}
+					/>
 					<button
 						type="submit"
 						className="pa1 dib helvetica f5 ma2 br-pill"
-						onClick={e => {
-							e.preventDefault();
-							this.onSubmit();
-						}}
+						onClick={this.onSubmit.bind(this)}
 					>
-						Submit
+					Submit
 					</button>
-				
 				</form>
-				{/*<CardList name={this.state.user.name}
-						  description={this.state.user.description}
-						  pictures={this.state.user.pictures}
-				/>*/}
 			</div>
 		);
 	}

@@ -4,15 +4,17 @@ import Card from './Card';
 
 class CardList extends Component {
    render(){
+   	const {profiles} = this.props;
    	return (
 		<div>
-			{this.props.profiles.map((user, i) => {
+			{profiles.map((user, i) => {
+				console.log('user', user)
 				return (
 					<Card
 						key={i}
-						id={this.props.profiles[i].id}
-						name={this.props.profiles[i].name}
-						description={this.props.profiles[i].description}
+						name={user.name}
+						description={user.description}
+						image={user.image}
 					/>
 				);
 			})}
