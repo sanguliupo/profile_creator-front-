@@ -9,7 +9,7 @@ class Card extends Component {
 				<img alt="pictures" src={`${image}`} width="200"/>
 				<div>
 					<h2>{name}</h2>
-					<h2>{description}</h2>
+					<p>{description}</p>
 				</div>
 			</div>
 		);

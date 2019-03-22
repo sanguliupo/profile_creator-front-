@@ -63,7 +63,7 @@ class CreateProfile extends Component {
 					<input
 						type="text"
 						className="commentbox"
-						placeholder="Image Url"
+						placeholder="An URL of your photo"
 						onChange={(event)=> {
 							this.setState({imageUrl: event.target.value});
 						}}
