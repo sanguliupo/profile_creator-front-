@@ -8,7 +8,6 @@ class CardList extends Component {
    	return (
 		<div>
 			{profiles.map((user, i) => {
-				console.log('user', user)
 				return (
 					<Card
 						key={i}

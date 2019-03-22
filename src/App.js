@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   fetchProfiles = () => {
-    fetch('/profiles')
+    fetch('https://peaceful-beyond-57215.herokuapp.com/profiles')
       .then(response => response.json())
       .then(users => this.setState({ profiles: users }));
   }
@@ -26,24 +26,13 @@ class App extends Component {
 
   render() { 
     const {profiles} = this.state;
-    console.log('profiles', profiles)
-    if(profiles.length > 0) {
-      return (
-        <div className="App">
-          <Navigation />
-          <CreateProfile fetchProfiles={this.fetchProfiles} />
-          <CardList profiles={profiles}/ >
-        </div>
-      );
-
-    } else {
-      return (
-        <div className="App">
-         Loading...
-        </div>
-      );
-
-    }
+    return (
+      <div className="App">
+        <Navigation />
+        <CreateProfile fetchProfiles={this.fetchProfiles} />
+        <CardList profiles={profiles}/ >
+      </div>
+    );
   }
 }
 

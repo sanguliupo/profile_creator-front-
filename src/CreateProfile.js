@@ -18,16 +18,13 @@ class CreateProfile extends Component {
 	onSubmit = async (event) => {
 		event.preventDefault();
 		const {name, description, imageUrl} = this.state;
-		const response = await fetch('/profile', {
+		const response = await fetch('https://peaceful-beyond-57215.herokuapp.com/profile', {
 			method: 'POST',
 			headers: HEADER_TYPE,
 			body: JSON.stringify({ name, description, imageUrl})
 		});
 		const responseText = await response.text();
 		const profileResponse = JSON.parse(responseText);
-
-		console.log('profileResponse', profileResponse);
-
 		this.setState({ 			
 			name: '',
 			description: '',
