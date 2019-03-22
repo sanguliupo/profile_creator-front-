@@ -43,7 +43,7 @@ class CreateProfile extends Component {
 						Create your profile
 					</p>
 					<input
-						className="athelas f5"
+						className="commentbox inputField"
 						type="text"
 						placeholder="Your name"
 						onChange={(event)=> {
@@ -53,7 +53,7 @@ class CreateProfile extends Component {
 					/>
 					<input
 						type="text"
-						className="commentbox"
+						className="commentbox inputField"
 						placeholder="Description"
 						onChange={(event)=> {
 							this.setState({description: event.target.value});
@@ -62,7 +62,7 @@ class CreateProfile extends Component {
 					/>
 					<input
 						type="text"
-						className="commentbox"
+						className="commentbox inputField"
 						placeholder="An URL of your photo"
 						onChange={(event)=> {
 							this.setState({imageUrl: event.target.value});

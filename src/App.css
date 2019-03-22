@@ -32,6 +32,26 @@
   }
 }
 .card {
+  vertical-align: top;
   width: 300px;
-  height: 400px;
+}
+
+.imageContainer {
+  height: 200px;
+  overflow: hidden;
+}
+
+.imageContainer img {
+  height: auto;
+  width: 200px;
+}
+
+.contentContainer {
+  height: 150px;
+}
+
+.inputField {
+  margin-right: 5px;
+  border: none;
+  border-radius: 3px;
 }
